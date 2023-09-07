@@ -28,4 +28,7 @@ public class TransferPage {
         transferCard.setValue(cardInfo.getCardNumber());
         transferButton.click();
     }
+    public String errorTransfer(){
+        return  "На счету не достаточно средст";
+    }
 }

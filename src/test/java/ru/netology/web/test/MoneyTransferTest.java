@@ -6,7 +6,6 @@ import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.DashboardPage;
 import ru.netology.web.page.LoginPageV1;
 
-
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +27,6 @@ class MoneyTransferTest {
 
     @Test
     void shouldTransferFirstToSecondCard() {
-
         var firstCard = DataHelper.getFirstCard();
         var secondCard = DataHelper.getSecondCard();
         var firstCardBalance = dashboardPage.getCardBalance(firstCard);
@@ -38,6 +36,23 @@ class MoneyTransferTest {
         var expectedBalanceSecondCard = secondCardBalance + amount;
         var transferPage = dashboardPage.selectCardToTransfer(secondCard);
         dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCard);
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCard);
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCard);
+        assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
+        assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
+    }
+
+    @Test
+    void shouldTransferSecondToFirstCard() {
+        var firstCard = DataHelper.getFirstCard();
+        var secondCard = DataHelper.getSecondCard();
+        var firstCardBalance = dashboardPage.getCardBalance(firstCard);
+        var secondCardBalance = dashboardPage.getCardBalance(secondCard);
+        var amount = DataHelper.generationValidAmount(firstCardBalance);
+        var expectedBalanceSecondCard = secondCardBalance - amount;
+        var expectedBalanceFirstCard = firstCardBalance + amount;
+        var transferPage = dashboardPage.selectCardToTransfer(firstCard);
+        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), secondCard);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCard);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCard);
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
