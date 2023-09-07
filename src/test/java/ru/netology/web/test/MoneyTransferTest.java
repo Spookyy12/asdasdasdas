@@ -26,7 +26,6 @@ class MoneyTransferTest {
     }
 
 
-
     @Test
     void shouldTransferFirstToSecondCard() {
 
@@ -37,12 +36,12 @@ class MoneyTransferTest {
         var amount = DataHelper.generationValidAmount(firstCardBalance);
         var expectedBalanceFirstCard = firstCardBalance - amount;
         var expectedBalanceSecondCard = secondCardBalance + amount;
-        var transferPage = dashboardPage.getCardBalance(secondCard);
-        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount),firstCard);
+        var transferPage = dashboardPage.selectCardToTransfer(secondCard);
+        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCard);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCard);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCard);
-        assertEquals(expectedBalanceFirstCard,actualBalanceFirstCard);
-        assertEquals(expectedBalanceSecondCard,actualBalanceSecondCard);
+        assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
+        assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
     }
 
 }

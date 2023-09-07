@@ -8,21 +8,22 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class TransferPage {
 
-    private final SelenideElement amount = $("[data-test-id='amount']");
-    private final SelenideElement transferCard = $("[data-test-id='from']");
+    private final SelenideElement amount = $("[data-test-id='amount'] input");
+    private final SelenideElement transferCard = $("[data-test-id='from'] input");
     private final SelenideElement transferButton = $("[data-test-id='action-transfer']");
 
 
-    public TransferPage(){
+    public TransferPage() {
 
         transferButton.shouldBe(visible);
     }
-    public DashboardPage makeValidTransfer(String amountToTransfer,DataHelper.CardInfo cardInfo){
-        makeTransfer(amountToTransfer,cardInfo);
+
+    public DashboardPage makeValidTransfer(String amountToTransfer, DataHelper.CardInfo cardInfo) {
+        makeTransfer(amountToTransfer, cardInfo);
         return new DashboardPage();
     }
 
-    public void makeTransfer(String sumTransfer, DataHelper.CardInfo cardInfo){
+    public void makeTransfer(String sumTransfer, DataHelper.CardInfo cardInfo) {
         amount.setValue(sumTransfer);
         transferCard.setValue(cardInfo.getCardNumber());
         transferButton.click();

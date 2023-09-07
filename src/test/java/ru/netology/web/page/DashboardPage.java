@@ -14,11 +14,12 @@ public class DashboardPage {
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
     private SelenideElement heading = $("[data-test-id=dashboard]");
+
     public DashboardPage() {
         heading.shouldBe(visible);
     }
 
-    public int getCardBalance(DataHelper.CardInfo cardInfo){
+    public int getCardBalance(DataHelper.CardInfo cardInfo) {
         var text = cards.findBy(text(cardInfo.getCardNumber().substring(15))).getText();
         return extractBalance(text);
     }
@@ -27,7 +28,8 @@ public class DashboardPage {
         var text = cards.get(index).getText();
         return extractBalance(text);
     }
-    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo){
+
+    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
         cards.findBy(attribute("data-test-id", cardInfo.getTestId())).$("button").click();
         return new TransferPage();
     }
